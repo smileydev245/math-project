@@ -1,0 +1,127 @@
+import java.util.Scanner;
+import java.util.Arrays;
+
+
+public class Main  {
+
+    public static double slope(double[][] cor) {
+        double yone = cor[0][1];
+        double ytwo = cor[1][1];
+
+        double xone = cor[0][0];
+        double xtwo = cor[1][0];
+
+        double rise = ytwo - yone;
+        double run = xtwo - xone;
+
+        double slope = rise / run;
+
+        return slope;
+    }
+
+    public static double slopeForX(double[][] cor) {
+        double xone = cor[0][1];
+        double xtwo = cor[1][1];
+
+        double yone = cor[0][0];
+        double ytwo = cor[1][0];
+
+        double rise = ytwo - yone;
+        double run = xtwo - xone;
+
+        double slope2 = rise / run;
+
+        return slope2;
+    }
+
+    public static double yint(double[][] cor) {
+        double mx = slope(cor);
+        double y = cor[0][1];
+        double x = cor[0][0];
+        double finalmx = mx * x;
+
+        double yint = y - finalmx;
+        
+        return yint;
+
+    }
+
+    public static double xint(double[][] cor) {
+        double xslope = slopeForX(cor);
+        // do same as y but adjust it to be for x
+        double my = slopeForX(cor);
+        double y = cor[0][1];
+        double x = cor[0][0];
+        double finalmy = my * y;
+
+        double xint = x - finalmy;
+
+        return xint;
+
+    }
+    // i put a smiley on line 63
+    // :)
+
+    public static String equ(double[][] cor) {
+        StringBuilder sb = new StringBuilder("y = ");
+
+        sb.append(slope(cor));
+        sb.append("x + ");
+        sb.append(yint(cor));
+
+        return sb.toString();
+    } 
+
+
+    public static void main(String[] args) {
+    
+    //take numbers (one is x and one is y)
+    
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("enter [(x,y) (x,y)]");
+    
+    String input = scanner.nextLine();
+    
+    //separtae numbers
+    String[] cor1 = input.split(" ");
+    double[][] cor = new double[2][2];
+    for (int i = 0; i < 2; i++) {
+        String[] cor2 = cor1[i].split(",");
+        //convet to double Double.parseDouble
+        for (int j = 0; j < 2; j++) {
+            cor[i][j] = Double.parseDouble(cor2[j]);
+        }
+        
+    }
+    
+    System.out.println(Arrays.deepToString(cor));
+
+    System.out.println("Choose math type: slope, y-int, x-int, equation, or total!");
+    String mathType = scanner.nextLine();
+
+        switch (mathType) {
+            case "slope" -> {
+                System.out.println(slope(cor));
+            }
+            case "y-int" -> {
+                System.out.println("(0, " + yint(cor) + ")");
+            }
+            case "x-int" -> {
+                System.out.println("(" + xint(cor) + ", 0)");
+            }
+            case "equation" -> {
+                System.out.println(equ(cor));
+            }
+            default -> {
+                System.out.println("Total stats:");
+                System.out.println("y-int: (0, " + yint(cor) + ")");
+                System.out.println("x-int: (" + xint(cor) + ", 0)");
+                System.out.println("Equation: " + equ(cor));
+            }
+        };
+    
+
+        }
+    
+    }
+        
